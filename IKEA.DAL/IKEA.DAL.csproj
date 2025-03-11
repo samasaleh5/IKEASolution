@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Models\zn4ojsip.jrw~" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Persistance\Data\Migrations\" />
     <Folder Include="Persistance\Data\Data Seeds\" />
     <Folder Include="Persistance\Repositories\" />
