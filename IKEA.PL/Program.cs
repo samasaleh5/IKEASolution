@@ -1,3 +1,4 @@
+using IKEA.BLL.Services.DepartmentServices;
 using IKEA.DAL.Persistance.Data;
 using IKEA.DAL.Persistance.Repositories.Departments;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,13 @@ namespace IKEA.PL
             builder.Services.AddControllersWithViews();
 
             //get connection from appsetting.json file
-            builder.Services.AddDbContext<ApplicationDbContext>(option =>
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
-                option.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
             });
 
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
 
             //not used now old way
             //builder.Services.AddScoped<ApplicationDbContext>();
