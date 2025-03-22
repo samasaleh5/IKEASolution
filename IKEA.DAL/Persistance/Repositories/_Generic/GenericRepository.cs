@@ -1,42 +1,42 @@
-﻿using IKEA.DAL.Models.Departments;
+﻿using IKEA.DAL.Models;
+using IKEA.DAL.Models.Departments;
 using IKEA.DAL.Persistance.Data;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IKEA.DAL.Persistance.Repositories.Departments
+namespace IKEA.DAL.Persistance.Repositories._Generic
 {
-    public class DepartmentRepository : IDepartmentRepository
+    internal class GenericRepository<T> : IGenericRepository<T> where T : ModelBase
     {
         private readonly ApplicationDbContext dbContext;
-        public DepartmentRepository(ApplicationDbContext context) 
+        public GenericRepository(ApplicationDbContext context)
         {
             dbContext = context;
         }
-        public IEnumerable<Department> GetAll(bool withNoTracking = true)
+        public IEnumerable<T> GetAll(bool withNoTracking = true)
         {
             if (withNoTracking)
-                return dbContext.Departments.Where(D=>D.IsDeleted==false).AsNoTracking().ToList();
+                return dbContext.Departments.Where(D => D.IsDeleted == false).AsNoTracking().ToList();
 
-            return dbContext.Departments.Where(D => D.IsDeleted == false).ToList(); 
+            return dbContext.Departments.Where(D => D.IsDeleted == false).ToList();
         }
 
         public Department? GetById(int id)
         {
-            var Department =dbContext.Departments.Find(id);
-          //var Department = dbContext.Departments.Local.FirstOrDefault(D => D.Id == id);
-          //  if(Department == null)
-          //      Department=dbContext.Departments.FirstOrDefault(D=>D.Id == id);
+            var Department = dbContext.Departments.Find(id);
+            //var Department = dbContext.Departments.Local.FirstOrDefault(D => D.Id == id);
+            //  if(Department == null)
+            //      Department=dbContext.Departments.FirstOrDefault(D=>D.Id == id);
 
             return Department;
 
         }
         public int Add(Department department)
         {
-           dbContext.Departments.Add(department);
+            dbContext.Departments.Add(department);
             return dbContext.SaveChanges();
         }
 
@@ -46,7 +46,7 @@ namespace IKEA.DAL.Persistance.Repositories.Departments
             return dbContext.SaveChanges();
         }
 
-        public int Delete(Department department) 
+        public int Delete(Department department)
         {
             #region SoftDelete
             department.IsDeleted = true;
