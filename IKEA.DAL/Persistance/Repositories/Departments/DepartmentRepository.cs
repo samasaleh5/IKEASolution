@@ -1,5 +1,7 @@
 ﻿using IKEA.DAL.Models.Departments;
+using IKEA.DAL.Models.Employees;
 using IKEA.DAL.Persistance.Data;
+using IKEA.DAL.Persistance.Repositories.Employees;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,55 +11,16 @@ using System.Threading.Tasks;
 
 namespace IKEA.DAL.Persistance.Repositories.Departments
 {
-    public class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : _Generic.GenericRepository<Department>, IDepartmentRepository
     {
-        private readonly ApplicationDbContext dbContext;
-        public DepartmentRepository(ApplicationDbContext context) 
-        {
-            dbContext = context;
-        }
-        public IEnumerable<Department> GetAll(bool withNoTracking = true)
-        {
-            if (withNoTracking)
-                return dbContext.Departments.Where(D=>D.IsDeleted==false).AsNoTracking().ToList();
+      
+            private readonly ApplicationDbContext dbContext;
+            public DepartmentRepository(ApplicationDbContext context) : base(context)
+            {
+                dbContext = context;
+            }
 
-            return dbContext.Departments.Where(D => D.IsDeleted == false).ToList(); 
-        }
+        
 
-        public Department? GetById(int id)
-        {
-            var Department =dbContext.Departments.Find(id);
-          //var Department = dbContext.Departments.Local.FirstOrDefault(D => D.Id == id);
-          //  if(Department == null)
-          //      Department=dbContext.Departments.FirstOrDefault(D=>D.Id == id);
-
-            return Department;
-
-        }
-        public int Add(Department department)
-        {
-           dbContext.Departments.Add(department);
-            return dbContext.SaveChanges();
-        }
-
-        public int Update(Department department)
-        {
-            dbContext.Departments.Update(department);
-            return dbContext.SaveChanges();
-        }
-
-        public int Delete(Department department) 
-        {
-            #region SoftDelete
-            department.IsDeleted = true;
-            dbContext.Departments.Update(department);
-            return dbContext.SaveChanges();
-            #endregion 
-
-            #region hard Delete
-            //dbContext.Departments.Remove(department);
-            //return dbContext.SaveChanges();
-            #endregion
-        }
     }
 }

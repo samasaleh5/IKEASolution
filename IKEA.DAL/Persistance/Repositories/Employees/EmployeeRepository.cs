@@ -10,55 +10,13 @@ using System.Threading.Tasks;
 
 namespace IKEA.DAL.Persistance.Repositories.Employees
 {
-    public class EmployeeRepository:IEmployeeRepository
+    public class EmployeeRepository : _Generic.GenericRepository<Employee>, IEmployeeRepository
     {
         private readonly ApplicationDbContext dbContext;
-        public EmployeeRepository(ApplicationDbContext context)
+        public EmployeeRepository(ApplicationDbContext context):base(context) 
         {
             dbContext = context;
         }
-        public IEnumerable<Employee> GetAll(bool withNoTracking = true)
-        {
-            if (withNoTracking)
-                return dbContext.Employees.Where(D => D.IsDeleted == false).AsNoTracking().ToList();
 
-            return dbContext.Employees.Where(D => D.IsDeleted == false).ToList();
-        }
-
-        public Employee? GetById(int id)
-        {
-            var Employee = dbContext.Employees.Find(id);
-            //var Employee = dbContext.Employees.Local.FirstOrDefault(D => D.Id == id);
-            //  if(Employee == null)
-            //      Employee=dbContext.Employees.FirstOrDefault(D=>D.Id == id);
-
-            return Employee;
-
-        }
-        public int Add(Employee employee)
-        {
-            dbContext.Employees.Add(employee);
-            return dbContext.SaveChanges();
-        }
-
-        public int Update(Employee employee)
-        {
-            dbContext.Employees.Update(employee);
-            return dbContext.SaveChanges();
-        }
-
-        public int Delete(Employee employee)
-        {
-            #region SoftDelete
-            employee.IsDeleted = true;
-            dbContext.Employees.Update(employee);
-            return dbContext.SaveChanges();
-            #endregion 
-
-            #region hard Delete
-            //dbContext.Employees.Remove(employee);
-            //return dbContext.SaveChanges();
-            #endregion
-        }
     }
 }
