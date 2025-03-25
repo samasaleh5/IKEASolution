@@ -1,6 +1,7 @@
 ﻿using IKEA.DAL.Models.Departments;
 using IKEA.DAL.Models.Employees;
 using IKEA.DAL.Persistance.Data;
+using IKEA.DAL.Persistance.Repositories.Departments;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,15 @@ namespace IKEA.DAL.Persistance.Repositories.Employees
 {
     public class EmployeeRepository : _Generic.GenericRepository<Employee>, IEmployeeRepository
     {
+
         private readonly ApplicationDbContext dbContext;
-        public EmployeeRepository(ApplicationDbContext context):base(context) 
+        public EmployeeRepository(ApplicationDbContext context) : base(context)
         {
             dbContext = context;
         }
 
+
+
     }
 }
+

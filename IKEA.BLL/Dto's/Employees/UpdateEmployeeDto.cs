@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IKEA.DAL.Models.Employees
+namespace IKEA.BLL.Dto_s.Employees
 {
-    public class Employee:ModelBase
+    public class UpdateEmployeeDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
-        public int? Age {  get; set; }
+        public int? Age { get; set; }
 
         public string? Address { get; set; }
 
@@ -23,11 +24,10 @@ namespace IKEA.DAL.Models.Employees
 
         public string? PhoneNumber { get; set; }
 
-        public DateOnly HiringDate { get; set; } 
+        public DateOnly HiringDate { get; set; }
 
         public Gender Gender { get; set; }
 
         public EmployeeType EmployeeType { get; set; }
-
     }
 }
