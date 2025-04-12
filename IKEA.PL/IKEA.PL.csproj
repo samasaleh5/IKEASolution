@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IKEA.BLL\IKEA.BLL.csproj" />
+    <ProjectReference Include="..\IKEA.DAL\IKEA.DAL.csproj" />
   </ItemGroup>
 
 </Project>

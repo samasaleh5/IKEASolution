@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace IKEA.DAL.Persistance.Repositories.Employees
+
 {
-    internal interface IEmployeeRepository:IGenericRepository<Employee>
+    public interface IEmployeeRepository:IGenericRepository<Employee>
     {
-      
+
     }
 }
